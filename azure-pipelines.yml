@@ -4,14 +4,19 @@
 
 trigger:
 - master
+- dev
 
 resources:
 - repo: self
 
 variables:
   # Container registry service connection established during pipeline creation
-  dockerRegistryServiceConnection: '472cf612-11e8-46f7-90d6-d073311cd56e'
-  containerRegistry: 'vegaabsolute.azurecr.io'
+  ${{ if eq(variables['Build.SourceBranchName'], 'master') }}: 
+    dockerRegistryServiceConnection: '472cf612-11e8-46f7-90d6-d073311cd56e'
+    containerRegistry: 'vegaabsolute.azurecr.io'
+  ${{ else }} :
+    dockerRegistryServiceConnection: '5043ee8c-6dea-4efd-b1cd-d24fa26fdc3c'
+    containerRegistry: 'vegadevregistry.azurecr.io'
   dockerfilePath: '$(Build.SourcesDirectory)/Dockerfile'
   tag: '$(Build.BuildId)'
 
