@@ -12,7 +12,7 @@ variables:
   # Container registry service connection established during pipeline creation
   dockerRegistryServiceConnection: '472cf612-11e8-46f7-90d6-d073311cd56e'
   containerRegistry: 'vegaabsolute.azurecr.io'
-  dockerfilePathServer: '$(Build.SourcesDirectory)/server/Dockerfile'
+  dockerfilePath: '$(Build.SourcesDirectory)/Dockerfile'
   tag: '$(Build.BuildId)'
 
   # Agent VM image name
@@ -76,7 +76,7 @@ stages:
       inputs:
         command: build
         repository: vegaweb
-        dockerfile: $(dockerfilePathServer)
+        dockerfile: $(dockerfilePath)
         containerRegistry: $(dockerRegistryServiceConnection)
         tags: |
           $(tag)
@@ -88,7 +88,7 @@ stages:
       inputs:
         command: buildAndPush
         repository: vegawebserver
-        dockerfile: $(dockerfilePathServer)
+        dockerfile: $(dockerfilePath)
         containerRegistry: $(dockerRegistryServiceConnection)
         tags: |
           $(tag)
