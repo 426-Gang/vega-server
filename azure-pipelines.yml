@@ -77,14 +77,33 @@ stages:
     pool:
       vmImage: $(vmImageName)
     steps:
-
     - task: Docker@2
-      displayName: Build and push an image to container registry
+      displayName: Build docker image
       inputs:
-        command: buildAndPush
+        command: build
         repository: vegawebserver
         dockerfile: $(dockerfilePath)
         containerRegistry: $(dockerRegistryServiceConnection)
         tags: |
           $(tag)
+          latest 
+        arguments: --build-arg WEBSERVER_URL=vega-webserver-dev.azurewebsites.net
+    - task: Docker@2
+      displayName: Push image to container registry
+      inputs:
+        command: push
+        repository: vegawebserver
+        containerRegistry: $(dockerRegistryServiceConnection)
+        tags: |
+          $(tag)
           latest
+    - task: AzureRmWebAppDeployment@4
+      condition: eq(variables['Build.SourceBranchName'], 'dev')
+      displayName: 'Deploy Dev Frontend Server'
+      inputs:
+        azureSubscription: 'Azure for Students (63ecfa31-9ab6-4ab7-8c8d-dd55767d7a40)'
+        appType: webAppContainer
+        WebAppName: 'vega-webserver-dev'
+        DockerNamespace: vegadevregistry.azurecr.io
+        DockerRepository: vegawebserver
+        DockerImageTag: latest
