@@ -110,3 +110,4 @@ stages:
         DockerNamespace: vegadevregistry.azurecr.io
         DockerRepository: vegawebserver
         DockerImageTag: latest
+        AppSettings: '-FRONTEND_URL vega-web-dev.azurewebsites.net -API_URL vega-spring-dev.azurewebsites.net'
