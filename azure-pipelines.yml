@@ -87,7 +87,10 @@ stages:
         tags: |
           $(tag)
           latest 
-        arguments: --build-arg WEBSERVER_URL=vega-webserver-dev.azurewebsites.net
+        ${{ if eq(variables['Build.SourceBranchName'], 'master') }}: 
+          arguments: --build-arg WEBSERVER_URL=vega-webserver.azurewebsites.net
+        ${{ else }} :
+          arguments: --build-arg WEBSERVER_URL=vega-webserver-dev.azurewebsites.net
     - task: Docker@2
       displayName: Push image to container registry
       inputs:
