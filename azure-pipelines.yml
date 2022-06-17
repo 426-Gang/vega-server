@@ -14,9 +14,11 @@ variables:
   ${{ if eq(variables['Build.SourceBranchName'], 'master') }}: 
     dockerRegistryServiceConnection: '472cf612-11e8-46f7-90d6-d073311cd56e'
     containerRegistry: 'vegaabsolute.azurecr.io'
+    webserverURL: 'vega-webserver.azurewebsites.net'
   ${{ else }} :
     dockerRegistryServiceConnection: '5043ee8c-6dea-4efd-b1cd-d24fa26fdc3c'
     containerRegistry: 'vegadevregistry.azurecr.io'
+    webserverURL: 'vega-webserver-dev.azurewebsites.net'
   dockerfilePath: '$(Build.SourcesDirectory)/Dockerfile'
   tag: '$(Build.BuildId)'
 
@@ -87,10 +89,7 @@ stages:
         tags: |
           $(tag)
           latest 
-        ${{ if eq(variables['Build.SourceBranchName'], 'master') }}: 
-          arguments: --build-arg WEBSERVER_URL=vega-webserver.azurewebsites.net
-        ${{ else }} :
-          arguments: --build-arg WEBSERVER_URL=vega-webserver-dev.azurewebsites.net
+        arguments: --build-arg WEBSERVER_URL=$(webserverURL)
     - task: Docker@2
       displayName: Push image to container registry
       inputs:
