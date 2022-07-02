@@ -21,7 +21,7 @@ router.post("/newentry", (req,res) => {
     		})
 })
 
-router.get("/mysecrets", (req, res) => {
+router.post("/mysecrets", (req, res) => {
 	const {username} = req.query;
 	console.log("Entered secrets for a user");
 	fetchsecrets(`http://${process.env.API_URL}/venus/vault/mysecrets?username=${username}`, req.headers)
