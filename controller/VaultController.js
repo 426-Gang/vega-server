@@ -1,6 +1,6 @@
 import bodyParser from 'body-parser';
 import express from 'express';
-import {fetchsecrets, newsecret} from '../services/VaultAPI.js';
+import {fetchsecrets, newsecret,updatesecret,deletesecret} from '../services/VaultAPI.js';
 
 let router = express();
 
