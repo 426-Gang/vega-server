@@ -1,6 +1,8 @@
 import auth from './auth/AuthenticationManager.js';
+import register from './auth/RegisterManager.js';
 import fileUploader from './controller/FileUploadController.js';
-import adminPanel from './controller/AdminPanelController.js'
+import adminPanel from './controller/AdminPanelController.js';
+import vault from './controller/VaultController.js'
 import express from 'express';
 import { config } from 'dotenv';
 import cors from 'cors';
@@ -27,8 +29,11 @@ app.get('/', (req, res) => {
 
 
 app.use("/api/login", auth);
+app.use("/api/register", register)
 app.use("/api/venus", fileUploader)
 app.use("/api/venus/admin", adminPanel)
+app.use("/api/venus/vault", vault)
+
 
 app.listen(port, () => {
   console.log('Expecting frontend to be hosted at: http://' + process.env.FRONTEND_URL);
