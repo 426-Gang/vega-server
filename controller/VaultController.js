@@ -5,7 +5,7 @@ import {fetchsecrets, newsecret,updatesecret,deletesecret} from '../services/Vau
 let router = express();
 
 
-router.post("/newentry", (req,res) => {
+router.post("/newsecret", (req,res) => {
 	const {username} = req.query;
 	const {data} = req.query;
 	const {shared} = req.query;
