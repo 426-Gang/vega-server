@@ -9,8 +9,9 @@ router.post("/newsecret", (req,res) => {
 	const {username} = req.query;
 	const {data} = req.query;
 	const {shared} = req.query;
+	const {name} = req.query;
     console.log("New secret")
-    newsecret(`http://${process.env.API_URL}/venus/vault/newsecret?username=${username}&data=${data}&shared=${shared}`, req.headers)
+    newsecret(`http://${process.env.API_URL}/venus/vault/newsecret?username=${username}&data=${data}&shared=${shared}&name=${name}`, req.headers)
     		.then(response => {
     			console.log("Response", response);
     			res.send(response);
@@ -40,8 +41,9 @@ router.post("/updatesecret", (req, res) => {
 	const {username} = req.query;
 	const {data} = req.query;
 	const {shared} = req.query;
+	const {name} = req.query;
 	console.log("Update secrets for a user");
-    updatesecret(`http://${process.env.API_URL}/venus/vault/updatesecret?id=${id}&username=${username}&data=${data}&shared=${shared}`, req.headers)
+    updatesecret(`http://${process.env.API_URL}/venus/vault/updatesecret?id=${id}&username=${username}&data=${data}&shared=${shared}&name=${name}`, req.headers)
 	.then(response => {
     	console.log("Response", response);
     	res.send(response);
